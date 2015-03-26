@@ -1,0 +1,16 @@
+{
+    "name": "wilcomenge/php-db-migration",
+    "description": "Simple PHP DB migration library",
+    "authors": [
+        {
+            "name": "Wilco Menge",
+            "email": "wilcomenge@hotmail.com"
+        }
+    ],
+    "require": {
+        "j4mie/idiorm": "1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    }
+}
