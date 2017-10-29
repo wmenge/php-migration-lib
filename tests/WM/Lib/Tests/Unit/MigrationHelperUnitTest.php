@@ -1,6 +1,6 @@
 <?php namespace WM\Lib\Tests\Unit;
 
-require_once __DIR__ . '/../../../../../src/WM/Lib/MigrationHelper.php';
+include __DIR__ . '/../../../../../src/WM/Lib/MigrationHelper.php';
 
 class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
 {
@@ -9,7 +9,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         if (!class_exists('\ORM')) {
-            class_alias('\WM\Lib\ORMMock', '\ORM');
+            class_alias('\WM\Lib\Migration\ORMMock', '\ORM');
         }
 
         global $mock_file_get_contents;
@@ -31,7 +31,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateDatabaseWithInvalidScriptFiles()
     {
-        $helper = new \WM\Lib\MigrationHelper(['invalidFilename', 'invalidFilename'], 'invalidFilename', 'invalidFilename');
+        $helper = new \WM\Lib\Migration\MigrationHelper(['invalidFilename', 'invalidFilename'], 'invalidFilename', 'invalidFilename');
         $helper->createDatabase();
     }
 
@@ -49,13 +49,13 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
         $this->mock->expects($this->exactly(2))->method('create');
         $this->mock->expects($this->exactly(2))->method('save');
 
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $helper->createDatabase();
     }
 
     public function testHighestVersion()
     {
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $this->assertEquals(2, $helper->getHighestVersion());
     }
 
@@ -66,7 +66,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
         $this->mock->method('max')
              ->willReturn($current);
 
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $helper->createDatabase();
         $this->assertEquals($current, $helper->getCurrentVersion());
     }
@@ -79,7 +79,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
              ->willReturn($current);
 
         // scripts array contains 2 as highest version, migration needed
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $helper->createDatabase();
         $this->assertEquals(true, $helper->isMigrationNeeded());
     }
@@ -93,7 +93,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
              ->willReturn($current);
 
         // scripts array contains 2 as highest version, migration not needed
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $helper->createDatabase();
         $this->assertEquals(false, $helper->isMigrationNeeded());
     }
@@ -103,7 +103,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
      */
     public function testMigrateDatabaseWithInvalidScriptFiles()
     {
-        $helper = new \WM\Lib\MigrationHelper(['invalidFilename', 'invalidFilename'], 'invalidFilename', 'invalidFilename');
+        $helper = new \WM\Lib\Migration\MigrationHelper(['invalidFilename', 'invalidFilename'], 'invalidFilename', 'invalidFilename');
         $helper->migrateDatabase();
     }
 
@@ -120,7 +120,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
         $this->mock->expects($this->exactly(2))->method('create');
         $this->mock->expects($this->exactly(2))->method('save');
 
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $helper->migrateDatabase();
     }
 
@@ -129,7 +129,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteDatabaseWithInvalidScriptFiles()
     {
-        $helper = new \WM\Lib\MigrationHelper(['invalidFilename', 'invalidFilename'], 'invalidFilename', 'invalidFilename');
+        $helper = new \WM\Lib\Migration\MigrationHelper(['invalidFilename', 'invalidFilename'], 'invalidFilename', 'invalidFilename');
         $helper->deleteDatabase();
     }
 
@@ -139,7 +139,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
              ->method('exec')
              ->with($this->equalTo('drop'));
 
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $helper->deleteDatabase();
     }
 
@@ -159,7 +159,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
         $this->mock->expects($this->exactly(3))->method('create');
         $this->mock->expects($this->exactly(3))->method('save');
 
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2'], 'drop', 'create');
         $helper->createDatabase();
 
         $current = 2; // DB contains 1 as current version
@@ -167,7 +167,7 @@ class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
         $this->mock->method('max')
              ->willReturn($current);
 
-        $helper = new \WM\Lib\MigrationHelper([1 => 'v1', 2 => 'v2', 3 => 'v3'], 'drop', 'create');
+        $helper = new \WM\Lib\Migration\MigrationHelper([1 => 'v1', 2 => 'v2', 3 => 'v3'], 'drop', 'create');
         $helper->migrateDatabase();
     }
 }

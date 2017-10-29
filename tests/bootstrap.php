@@ -1,4 +1,4 @@
-<?php namespace WM\Lib;
+<?php namespace WM\Lib\Migration;
 
 class ORMMock
 {
@@ -25,7 +25,7 @@ class ORMMock
 }
 
 // controls behaviour of mocked file_get_contents function
-$mock_file_get_contents = false;
+$mock_file_get_contents = true;
 
 function file_get_contents($filename)
 {

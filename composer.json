@@ -1,16 +1,22 @@
 {
-    "name": "wilcomenge/php-db-migration",
+    "name": "wmenge/php-db-migration",
     "description": "Simple PHP DB migration library",
     "authors": [
         {
             "name": "Wilco Menge",
-            "email": "wilcomenge@hotmail.com"
+            "email": "wilcomenge@gmail.com"
         }
     ],
     "require": {
+        "php": ">=5.3",
         "j4mie/idiorm": "1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable"
+    },
+    "autoload": {
+        "psr-0" : {
+            "WM\\Lib\\Migration" : "src"
+        }
     }
 }

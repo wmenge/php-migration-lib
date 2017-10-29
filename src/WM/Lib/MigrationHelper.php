@@ -1,4 +1,4 @@
-<?php namespace WM\Lib;
+<?php namespace WM\Lib\Migration;
 
 /**
  * Utility class to aid in db vendor independant database migration
@@ -135,7 +135,7 @@ class MigrationHelper
     {
         $sql = @file_get_contents($script);
         if ($sql === false) {
-            throw new \Exception($script. ' not found', 1);
+            throw new \Exception('Script file \'' . $script. '\' not found', 1);
         }
         
         \ORM::get_db()->exec($sql);

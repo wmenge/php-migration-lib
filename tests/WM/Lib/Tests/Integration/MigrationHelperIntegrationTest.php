@@ -1,7 +1,5 @@
 <?php namespace WM\Lib\Tests\Unit;
 
-require_once __DIR__ . '/../../../../../src/WM/Lib/MigrationHelper.php';
-
 /**
  * Integration test with SQLite in-memory db
  *
@@ -29,7 +27,7 @@ class MigrationHelperIntegrationTest extends \PHPUnit_Framework_TestCase
     public function testCreateDatabase()
     {
         // Create initial database
-        $helper = new \WM\Lib\MigrationHelper(
+        $helper = new \WM\Lib\Migration\MigrationHelper(
             [
                 1 => __DIR__ . '/files/migration-1-sqlite.sql',
                 2 => __DIR__ . '/files/migration-2-sqlite.sql'
@@ -102,7 +100,7 @@ class MigrationHelperIntegrationTest extends \PHPUnit_Framework_TestCase
     public function testMigrateDatabase()
     {
         // Create initial database
-        $helper = new \WM\Lib\MigrationHelper(
+        $helper = new \WM\Lib\Migration\MigrationHelper(
             [
                 1 => __DIR__ . '/files/migration-1-sqlite.sql',
             ],
@@ -153,7 +151,7 @@ class MigrationHelperIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->fetchAll());
 
         // Perform database migration
-        $helper = new \WM\Lib\MigrationHelper(
+        $helper = new \WM\Lib\Migration\MigrationHelper(
             [
                 1 => __DIR__ . '/files/migration-1-sqlite.sql',
                 2 => __DIR__ . '/files/migration-2-sqlite.sql'
@@ -225,7 +223,7 @@ class MigrationHelperIntegrationTest extends \PHPUnit_Framework_TestCase
     public function testMigrateDatabaseRetainsContent()
     {
         // Create initial database
-        $helper = new \WM\Lib\MigrationHelper(
+        $helper = new \WM\Lib\Migration\MigrationHelper(
             [
                 1 => __DIR__ . '/files/migration-1-sqlite.sql',
             ],
@@ -246,7 +244,7 @@ class MigrationHelperIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, \ORM::for_table('table_1')->find_array());
 
         // Perform database migration
-        $helper = new \WM\Lib\MigrationHelper(
+        $helper = new \WM\Lib\Migration\MigrationHelper(
             [
                 1 => __DIR__ . '/files/migration-1-sqlite.sql',
                 2 => __DIR__ . '/files/migration-2-sqlite.sql'
