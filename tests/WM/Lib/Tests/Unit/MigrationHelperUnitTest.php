@@ -1,6 +1,6 @@
 <?php namespace WM\Lib\Tests\Unit;
 
-include __DIR__ . '/../../../../../src/WM/Lib/MigrationHelper.php';
+include __DIR__ . '/../../../../../src/WM/Lib/Migration/MigrationHelper.php';
 
 class MigrationHelperUnitTest extends \PHPUnit_Framework_TestCase
 {
