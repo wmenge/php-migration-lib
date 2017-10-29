@@ -98,10 +98,11 @@ class MigrationHelper
      * Gets current db version according to migration table
      * @return numeric db version
      */
-    public function getCurrentVersion()
+    private function getCurrentVersion()
     {
         try {
-            return \ORM::for_table('migration')->max('version');
+            //return \ORM::for_table('migration')->max('version');
+            return $
         } catch (\Exception $e) {
             return 0;
         }
@@ -111,7 +112,7 @@ class MigrationHelper
      * Get highest available db version
      * @return numeric db version
      */
-    public function getHighestVersion()
+    private function getHighestVersion()
     {
         $versions = array_keys($this->_migrationScripts);
         return max($versions);
