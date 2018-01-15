@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-0" : {
-            "WM\\Lib\\Migration" : "src"
+            "WM\\Lib\\Migration\\" : "src/"
         }
     }
 }
