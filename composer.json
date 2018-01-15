@@ -15,8 +15,6 @@
         "phpunit/phpunit": "@stable"
     },
     "autoload": {
-        "psr-0" : {
-            "WM\\Lib\\Migration\\" : "src/"
-        }
+        "psr-4": { "": "src/" }
     }
 }
